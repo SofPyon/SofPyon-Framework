@@ -151,19 +151,19 @@
           //インスタンス化
           $obj_controller = new $name_controller( $param );
           //メソッド読み出し可能かどうか( 2つ目のパラメータ = メソッド名 )
-          if( is_callable(array($obj_controller, PARAM1)) ){
+          if( PARAM1 == '' ){
+            /* PARAM1 がそもそも空 */
+            if( is_callable(array($obj_controller, $config['index'])) ){
+              call_user_func(array($obj_controller, $config['index']));
+            }
+          }elseif( is_callable(array($obj_controller, PARAM1)) ){
             /* (可能)コントローラのメソッド(アクション)が呼び出し可能 */
 
             call_user_func(array($obj_controller, PARAM1));
           }else{
             /* (不可能)コントローラのメソッド(アクション)が呼び出し不可能 */
 
-            //indexメソッドをチェック
-            if( is_callable(array($obj_controller, $config['index']) ) ){
-              call_user_func(array($obj_controller, $config['index']));
-            }else{
-              $is_404 = true;
-            }
+            $is_404 = true;
           }
         }else{
           /* コントローラクラスが存在しない */
