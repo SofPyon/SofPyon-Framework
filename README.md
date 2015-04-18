@@ -1,4 +1,4 @@
-# Framework
+# SofPyon Framework
 MVC風なことができるシンプルなPHPフレームワーク(超未完成)
 
 ##特徴
