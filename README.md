@@ -2,7 +2,7 @@
 MVC風なことができるシンプルなPHPフレームワーク(超未完成)
 
 ##このプログラムのレベル
- - __誰か早急に助けてください！！__
+ - __動かない！と思ったら .htaccess を忘れていた__
   - <a href="http://sofpyon.github.io/about_applevel.html" target="_blank">この表記について</a>
 
 ##特徴
