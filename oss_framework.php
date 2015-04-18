@@ -308,9 +308,9 @@ if( $is_404 ){
  function view(
    $array_view     = array(),
    $template       = '',
-   $array_template = array()
+   $array_template = array(),
    $name           = PARAM1,
-   $dir            = PARAM0,
+   $dir            = PARAM0
  ) {
    //config
    global $config;
