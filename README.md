@@ -1,4 +1,4 @@
-# SofPyon Framework
+# SofPyon Framework( Ver. α of α )
 MVC風なことができるシンプルなPHPフレームワーク(超未完成)
 
 ##このプログラムのレベル
