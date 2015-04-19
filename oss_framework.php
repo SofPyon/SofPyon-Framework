@@ -150,7 +150,8 @@
           /* コントローラクラスが存在する */
 
           //インスタンス化
-          $obj_controller = new $name_controller( $param );
+          $param_go = array_slice($param, 2);
+          $obj_controller = new $name_controller( $param_go );
           //メソッド読み出し可能かどうか( 2つ目のパラメータ = メソッド名 )
           if( PARAM1 == '' ){
             /* PARAM1 がそもそも空 */
@@ -188,7 +189,8 @@
             /* indexコントローラクラスが存在する */
 
             //インスタンス化
-            $obj_controller = new $name_controller( $param );
+            $param_go = array_slice($param, 1);
+            $obj_controller = new $name_controller( $param_go );
             //メソッド読み出し可能かどうか( 1つ目のパラメータ = メソッド名 )
             if( is_callable(array($obj_controller, PARAM0)) ){
               /* indexコントローラメソッド可能 */
@@ -223,7 +225,8 @@
           /* indexクラス存在する */
 
           //インスタンス化
-          $obj_controller = new $name_controller( $param );
+          $param_go = $param;
+          $obj_controller = new $name_controller( $param_go );
           //メソッド読み出し可能かどうか( $config['index'] = メソッド名 )
           if( is_callable(array($obj_controller, $config['index']) ) ){
             /* indexメソッド読み出し可能 */
