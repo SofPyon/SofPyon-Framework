@@ -264,3 +264,16 @@ if( $is_404 ){
      return null;
    }
  }
+
+## その他関数
+ function h($str) {
+   echo htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+ }
+
+ function h_nl2br($str) {
+   echo nl2br(htmlspecialchars($str, ENT_QUOTES, 'UTF-8'));
+ }
+
+ function htmlescape($str) {
+   return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+ }
