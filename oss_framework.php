@@ -104,152 +104,68 @@
  $is_404 = false;
 
  //// GETの内容を読み取る ////
- if( isset( $_GET[ $config['get_param'] ] ) ){
    //GET取得
    $get = $_GET[ $config['get_param'] ];
+   //GETが空ならindex/indexにする
+   if( $get == '' ){
+     $get = $config['index']. '/'. $config['index'];
+   }
    //スラッシュで分割
    $param = explode("/", $get);
+
+   //配列でないなら、配列にする
+   if( !is_array( $param ) ){
+     $param = array();
+   }
+
    //param1がないとき
-   if( $param[0] == '' ){
-     $param[0] = $config['index'];
-     $param[1] = $config['index'];
-   }
-   //param2がないとき
    if( $param[1] == '' ){
-     $param[1] = $config['index'];
+     array_splice($param, 1, 0, $config['index']);
    }
- }else{
-   //paramを適当に
-   $param = array();
-   $param[0] = $config['index'];
-   $param[1] = $config['index'];
- }
 
  //// PARAM0 と PARAM1 を用意 ////
  define( 'PARAM0', $param[0] );
  define( 'PARAM1', $param[1] );
 
  //// １つ目のパラメータ = コントローラ名 ////
-    //コントローラ名
-    $name_controller;
 
-    //PARAM0が空欄でないかどうか
-    if( PARAM0 != '' ){
-      /* PARAM0が存在する  */
-      //コントローラ名
-      $name_controller = strtolower( PARAM0 ). '_controller';
-      //ファイルは存在するか
-      $file_controller = $config['controller']. '/'. $name_controller. '.php';
-      if( file_exists( $file_controller ) ){
-        /* コントローラファイルが存在する */
+  //コントローラ名
+  $name_controller = strtolower( PARAM0 ). '_controller';
+  //ファイルは存在するか
+  $file_controller = $config['controller']. '/'. $name_controller. '.php';
+  if( file_exists( $file_controller ) ){
+    /* コントローラファイルが存在する */
 
-        //読み込む
-        require_once $file_controller;
-        //クラスが存在するか
-        if( class_exists( $name_controller, false ) ){
-          /* コントローラクラスが存在する */
+    //読み込む
+    require_once $file_controller;
+    //クラスが存在するか
+    if( class_exists( $name_controller, false ) ){
+      /* コントローラクラスが存在する */
 
-          //インスタンス化
-          $param_go = array_slice($param, 2);
-          $obj_controller = new $name_controller( $param_go );
-          //メソッド読み出し可能かどうか( 2つ目のパラメータ = メソッド名 )
-          if( PARAM1 == '' ){
-            /* PARAM1 がそもそも空 */
-            if( is_callable(array($obj_controller, $config['index'])) ){
-              call_user_func(array($obj_controller, $config['index']));
-            }
-          }elseif( is_callable(array($obj_controller, PARAM1)) ){
-            /* (可能)コントローラのメソッド(アクション)が呼び出し可能 */
+      //インスタンス化
+      $param_go = array_slice($param, 2);
+      $obj_controller = new $name_controller( $param_go );
+      //メソッド読み出し可能かどうか( 2つ目のパラメータ = メソッド名 )
+      if( is_callable(array($obj_controller, PARAM1)) ){
+        /* (可能)コントローラのメソッド(アクション)が呼び出し可能 */
 
-            call_user_func(array($obj_controller, PARAM1));
-          }else{
-            /* (不可能)コントローラのメソッド(アクション)が呼び出し不可能 */
-
-            $is_404 = true;
-          }
-        }else{
-          /* コントローラクラスが存在しない */
-          $is_404 = true;
-        }
+        call_user_func(array($obj_controller, PARAM1));
       }else{
-        /* コントローラファイルが存在しない */
-
-        ///indexコントローラのメソッドかどうか確認
-        //コントローラ名
-        $name_controller = $config['index']. '_controller';
-        //ファイルは存在するか
-        $file_controller = $config['controller']. '/'. $name_controller. '.php';
-        if( file_exists( $file_controller ) ){
-          /* indexコントローラファイルが存在する */
-
-          //読み込む
-          require_once $file_controller;
-          //クラスが存在するか
-          if( class_exists( $name_controller, false ) ){
-            /* indexコントローラクラスが存在する */
-
-            //インスタンス化
-            $param_go = array_slice($param, 1);
-            $obj_controller = new $name_controller( $param_go );
-            //メソッド読み出し可能かどうか( 1つ目のパラメータ = メソッド名 )
-            if( is_callable(array($obj_controller, PARAM0)) ){
-              /* indexコントローラメソッド可能 */
-              call_user_func(array($obj_controller, PARAM0));
-            }else{
-              /* indexコントローラメソッド不可能 */
-              $is_404 = true;
-            }
-          }else{
-            /* indexコントローラクラスが存在しない */
-            $is_404 = true;
-          }
-        }else{
-          /* indexコントローラファイルが存在しない */
-          $is_404 = true;
-        }
-      }
-    }else{
-      /* PARAM0 が空欄 */
-
-      //コントローラ名
-      $name_controller = $config['index']. '_controller';
-      //ファイルは存在するか
-      $file_controller = $config['controller']. '/'. $name_controller. '.php';
-      if( file_exists( $file_controller ) ){
-        /* indexコントローラ存在する */
-
-        //読み込む
-        require_once $file_controller;
-        //クラスが存在するか
-        if( class_exists( $name_controller, false ) ){
-          /* indexクラス存在する */
-
-          //インスタンス化
-          $param_go = $param;
-          $obj_controller = new $name_controller( $param_go );
-          //メソッド読み出し可能かどうか( $config['index'] = メソッド名 )
-          if( is_callable(array($obj_controller, $config['index']) ) ){
-            /* indexメソッド読み出し可能 */
-            call_user_func(array($obj_controller, $config['index']));
-          }else{
-            /* indexメソッド読み出し不可能 */
-            $is_404 = true;
-          }
-        }else{
-          /* indexクラス存在しない */
-          $is_404 = true;
-        }
-      }else{
-        /* indexコントローラ存在しない */
+        /* (不可能)コントローラのメソッド(アクション)が呼び出し不可能 */
 
         $is_404 = true;
       }
+    }else{
+      /* コントローラクラスが存在しない */
+      $is_404 = true;
     }
+  }else{
+    /* コントローラファイルが存在しない */
+    $is_404 = true;
+  }
 
 ## 404の場合
 if( $is_404 ){
-  //404を返す
-  header("HTTP/1.1 404 Not Found");
   //404表示ファイルが存在するか
   if( file_exists( $config['404_file'] ) ){
     //404ファイル表示
@@ -262,8 +178,6 @@ if( $is_404 ){
 
 ## モデル読み出し
 /**
-* モデル読み出し
-*
 * @param string $name モデル名
 * @return [object|null] モデルオブジェクト
 */
@@ -299,8 +213,6 @@ if( $is_404 ){
 
 ## ビュー読み出し
 /**
-* ビュー読み出し
-*
 * @param array $array_view ビューに渡す設定
 * @param string $template テンプレート名
 * @param array $array_template テンプレートに渡す設定
