@@ -153,7 +153,21 @@
       }else{
         /* (不可能)コントローラのメソッド(アクション)が呼び出し不可能 */
 
-        $is_404 = true;
+        //indexアクションに渡す
+        $param_go = array_slice($param, 1);
+        unset( $obj_controller );
+        $obj_controller = new $name_controller( $param_go );
+
+        if( is_callable(array($obj_controller, $config['index'])) ){
+          /* indexアクションアクセス可能 */
+
+          call_user_func(array($obj_controller, $config['index']));
+        }else{
+          /* indexアクションも不可能 */
+
+          $is_404 = true;
+        }
+
       }
     }else{
       /* コントローラクラスが存在しない */
