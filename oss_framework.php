@@ -149,7 +149,7 @@
       if( is_callable(array($obj_controller, PARAM1)) ){
         /* (可能)コントローラのメソッド(アクション)が呼び出し可能 */
 
-        call_user_func(array($obj_controller, PARAM1));
+        $obj_controller->$param[1]();
       }else{
         /* (不可能)コントローラのメソッド(アクション)が呼び出し不可能 */
 
@@ -161,7 +161,7 @@
         if( is_callable(array($obj_controller, $config['index'])) ){
           /* indexアクションアクセス可能 */
 
-          call_user_func(array($obj_controller, $config['index']));
+          $obj_controller->$config['index']();
         }else{
           /* indexアクションも不可能 */
 
