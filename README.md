@@ -16,7 +16,7 @@ MVC風なことができるシンプルなPHPフレームワーク(超未完成)
   - でも、それなりに簡単にDB操作できるはずです
  - コントローラやモデルなどの基底クラスは __自分で作ってください__
  - テンプレート使えます。ただし、テンプレートにView部分を表示させるには、 __`include $file_view;` させてください__
- - index コントローラの index アクションを作成すると、 __http://example.jp/ といったURLでアクセスできます__ 
+ - index コントローラの index アクションを作成すると、 __http://example.jp/ といったURLでアクセスできます__
   - index という名前は、`$config['index']` で __変更できます__
  - 404.php を作成すると、404ページになります
   - ただし、404.php には、MVCを __採用していません__
@@ -44,11 +44,11 @@ MVC風なことができるシンプルなPHPフレームワーク(超未完成)
 <?php
 //controller/index_controller.php
 class index_controller {
-  
+
   public function __construct( $param ) {
     $this->param = $param;
   }
-  
+
   public function index(){
     view( array( 'data' => $this->param[0] ) );
   }
@@ -71,11 +71,11 @@ http://example.jp/
 <?php
 //model/hoge_model.php
 class hoge_model {
-  
+
   public function __construct( $db ) {
     $this->db = $db;
   }
-  
+
   public function get() {
     $sql = 'SELECT * FROM hoge_table WHERE col = :value';
     $conditions = array( ':value' => 13 );
@@ -91,6 +91,14 @@ $model = model( 'hoge' );
 $data = $model->get();
 view( array( 'data' => $data ) );
 ```
+
+## このフレームワークの趣旨について
+このフレームワークは、いわゆる __オレオレフレームワーク__ です。面倒な書き方をしなくてもWebアプリが作れる、という程度を目指していますので、ほかのフレームワークのように機能は充実していません。
+(強いて言うなら、htmlspecialchars と echo を同時に行う h 関数がこのフレームワークには存在します)
+
+このフレームワークで、例えば、コントローラ名を省略して http://example.jp/action とアクセスされた場合、 index アクションの action メソッドが呼び出されるようにしたいという際は、ご自身で __oss_framework.php を編集していただくことになりますので__ よろしくお願いします。
+
+なお、その際は、ぜひ、プルリクエストなどを行っていただけると幸いです。
 
 ## その他の使い方
 oss_framework.php を解読すればわかるはずです。
