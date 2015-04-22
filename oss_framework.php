@@ -124,6 +124,12 @@
      $param = array();
    }
 
+   //配列の中の空要素を削除する
+   $param = array_filter($param, "strlen");
+
+   //添字を振り直す
+   $param = array_values($param);
+
    //param1がないとき
    if( $param[1] == '' ){
      array_splice($param, 1, 0, $config['index']);
