@@ -103,6 +103,7 @@
  //// 以下、どうでもいい設定項目 ////
  if( !isset( $config['index'] ) || $config['index'] == '' )           $config['index']      = 'index';
  if( !isset( $config['get_param'] ) || $config['get_param'] == '' )   $config['get_param']  = 'query';
+ if( !isset( $config['application_root'] ) || $config['application_root'] == '' )   $config['application_root']  = 'applicationroot';
 
 ## ルーティング
 
@@ -143,6 +144,8 @@
 
   //コントローラ名
   $name_controller = strtolower( PARAM0 ). '_controller';
+  // - を application_root に変更
+  $name_controller = str_replace('-', $config['application_root'], $name_controller);
   //ファイルは存在するか
   $file_controller = $config['controller']. '/'. $name_controller. '.php';
   if( file_exists( $file_controller ) ){
