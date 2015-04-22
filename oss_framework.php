@@ -79,6 +79,12 @@
 
  $db = new dbConnect( db::HOST, db::DB_NAME, db::UTF, db::USER, db::PASS );
 
+ //// ルートURLの設定 ////
+ if( !defined( 'R_URL' ) ){
+   header('HTTP/1.1 500 Internal Server Error');
+   die( '<b>FRAMEWORK ERROR!!</b> - The constant "R_URL" must be defined.' );
+ }
+
  //// 各種設定(index.phpで上書きできます) ////
  if( !isset( $config ) || !is_array( $config ) )                      $config = array();
 
