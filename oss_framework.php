@@ -24,7 +24,7 @@
  class dbConnect {
 
    //PDOを格納する
-   private $pdo;
+   public $pdo;
 
    //データベースに接続する関数
    function __construct( $host, $dbname, $utf, $dbuser, $dbpass ){
