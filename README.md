@@ -1,16 +1,16 @@
 # SofPyon Framework( Ver. α of α )
 MVC風なことができるシンプルなPHPフレームワーク(超未完成・なおかつエセ)
 
-##このプログラムのレベル
+## このプログラムのレベル
  - __だいぶ実用的になった__
   - <a href="http://sofpyon.github.io/about_applevel.html" target="_blank">この表記について</a>
 
-##最低動作環境
+## 最低動作環境
  - __PHP 5.3 以降__
   - なるべく、最新で安定的なバージョンで利用されることをおすすめします。
   - PHP 5.3 で新たに実装された機能を利用しています。
 
-##特徴
+## 特徴
  - __１ファイルフレームワーク__ です
  - O/Rマッピングを一切 __使用していません__
   - でも、それなりに簡単にDB操作できるはずです
@@ -25,11 +25,11 @@ MVC風なことができるシンプルなPHPフレームワーク(超未完成�
   - PHPの学習が不十分な段階でフレームワークを作成したため
  - その他、設定項目は、 `$config` で変更できます
 
-##使い方
+## 使い方
 
 注) 以下、開発者の __願望が含まれている可能性があります__ 。
 
-###0. ファイル構成
+### 0. ファイル構成
  - http://example.jp/
   - .htaccess ( Apache 以外の方はご自身で作成してください )
   - oss_framework.php
@@ -39,7 +39,7 @@ MVC風なことができるシンプルなPHPフレームワーク(超未完成�
      - __template__
    - __controller__
 
-###1. Controller を作る
+### 1. Controller を作る
 ```php
 <?php
 //controller/index_controller.php
@@ -55,7 +55,7 @@ class index_controller {
 }
 ```
 
-###2. View を作る
+### 2. View を作る
 ```php
 <?php
 //view/index/index.php
@@ -63,10 +63,10 @@ PARAM0:
 <?php echo $array_view['data']; ?>
 ```
 
-###実行結果
+### 実行結果
 http://example.jp/
 
-###3. Model は？
+### 3. Model は？
 ```php
 <?php
 //model/hoge_model.php
